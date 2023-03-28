@@ -10,4 +10,6 @@ public interface PokemonService {
     List<PokemonDto> getAllPokemon();
     PokemonDto getPokemonById(int id);
     PokemonDto updatePokemon(PokemonDto pokemonDto, int id);
+    void deletePokemonById(int id);
+    List<PokemonDto> getAllPokemonWithPagination(int pageNo, int pageSize);
 }

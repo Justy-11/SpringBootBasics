@@ -5,8 +5,11 @@ import com.jathursh.sb.exception.PokemonNotFoundException;
 import com.jathursh.sb.model.Pokemon;
 import com.jathursh.sb.repository.PokemonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.awt.print.Pageable;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -55,6 +58,20 @@ public class PokemonServiceImpl implements PokemonService{
 
         Pokemon updatePokemon = pokemonRepository.save(pokemon);
         return mapToDto(updatePokemon);
+    }
+
+    @Override
+    public void deletePokemonById(int id) {
+        Pokemon pokemon = pokemonRepository.findById(id).orElseThrow(()-> new PokemonNotFoundException("pokemon could not be deleted"));
+        pokemonRepository.delete(pokemon);
+    }
+
+    @Override
+    public List<PokemonDto> getAllPokemonWithPagination(int pageNo, int pageSize) {
+        PageRequest pageRequest = PageRequest.of(pageNo, pageSize);
+        Page<Pokemon> pokemonPage = pokemonRepository.findAll(pageRequest);
+        List<Pokemon> pokemon = pokemonPage.getContent();
+        return pokemon.stream().map(p-> mapToDto(p)).collect(Collectors.toList());
     }
 
     private PokemonDto mapToDto(Pokemon pokemon) {
