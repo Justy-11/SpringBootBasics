@@ -22,6 +22,7 @@ public class Pokemon {
     private String name;
     private String type;
 
+    // for one Pokemon there may be many reviews
     @OneToMany(mappedBy = "pokemon", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Review> reviews = new ArrayList<Review>();
 }
