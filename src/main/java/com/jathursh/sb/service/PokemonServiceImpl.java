@@ -1,6 +1,7 @@
 package com.jathursh.sb.service;
 
 import com.jathursh.sb.dto.PokemonDto;
+import com.jathursh.sb.dto.PokemonResponse;
 import com.jathursh.sb.exception.PokemonNotFoundException;
 import com.jathursh.sb.model.Pokemon;
 import com.jathursh.sb.repository.PokemonRepository;
@@ -67,11 +68,21 @@ public class PokemonServiceImpl implements PokemonService{
     }
 
     @Override
-    public List<PokemonDto> getAllPokemonWithPagination(int pageNo, int pageSize) {
+    public PokemonResponse getAllPokemonWithPagination(int pageNo, int pageSize) {
         PageRequest pageRequest = PageRequest.of(pageNo, pageSize);
         Page<Pokemon> pokemonPage = pokemonRepository.findAll(pageRequest);
         List<Pokemon> pokemon = pokemonPage.getContent();
-        return pokemon.stream().map(p-> mapToDto(p)).collect(Collectors.toList());
+        List<PokemonDto> content = pokemon.stream().map(p-> mapToDto(p)).collect(Collectors.toList());
+
+        PokemonResponse pokemonResponse = new PokemonResponse();
+        pokemonResponse.setContent(content);
+        pokemonResponse.setPageNo(pokemonPage.getNumber());
+        pokemonResponse.setPageSize(pokemonPage.getSize());
+        pokemonResponse.setTotalPages(pokemonPage.getTotalPages());
+        pokemonResponse.setTotalElements(pokemonPage.getTotalElements());
+        pokemonResponse.setLast(pokemonPage.isLast());
+
+        return pokemonResponse;
     }
 
     private PokemonDto mapToDto(Pokemon pokemon) {

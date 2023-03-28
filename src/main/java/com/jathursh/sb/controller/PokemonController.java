@@ -1,6 +1,7 @@
 package com.jathursh.sb.controller;
 
 import com.jathursh.sb.dto.PokemonDto;
+import com.jathursh.sb.dto.PokemonResponse;
 import com.jathursh.sb.service.PokemonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,7 +18,7 @@ public class PokemonController {
     private PokemonService pokemonService;
 
     @GetMapping("pokemon_with_pagination")
-    public ResponseEntity<List<PokemonDto>> getPokemons(
+    public ResponseEntity<PokemonResponse> getPokemons(
             @RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
             @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize
     ) {
