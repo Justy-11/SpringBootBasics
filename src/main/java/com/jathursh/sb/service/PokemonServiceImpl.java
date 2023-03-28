@@ -1,6 +1,7 @@
 package com.jathursh.sb.service;
 
 import com.jathursh.sb.dto.PokemonDto;
+import com.jathursh.sb.exception.PokemonNotFoundException;
 import com.jathursh.sb.model.Pokemon;
 import com.jathursh.sb.repository.PokemonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,12 @@ public class PokemonServiceImpl implements PokemonService{
 
         // using mapper method - don't want the "type" from model to dto
         return pokemon.stream().map(p-> mapToDto(p)).collect(Collectors.toList());
+    }
+
+    @Override
+    public PokemonDto getPokemonById(int id) {
+        Pokemon pokemon = pokemonRepository.findById(id).orElseThrow(()-> new PokemonNotFoundException("Pokemon could not be found"));
+        return mapToDto(pokemon);
     }
 
     private PokemonDto mapToDto(Pokemon pokemon) {
