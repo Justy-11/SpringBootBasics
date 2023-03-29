@@ -1,11 +1,13 @@
 package com.jathursh.sb.controller;
 
+import com.jathursh.sb.dto.AuthResponseDto;
 import com.jathursh.sb.dto.LoginDto;
 import com.jathursh.sb.dto.RegisterDto;
 import com.jathursh.sb.model.Role;
 import com.jathursh.sb.model.UserEntity;
 import com.jathursh.sb.repository.RoleRepository;
 import com.jathursh.sb.repository.UserRepository;
+import com.jathursh.sb.security.JwtGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,6 +39,8 @@ public class AuthController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    private JwtGenerator jwtGenerator;
+
     @PostMapping("register")
     public ResponseEntity<String> register(@RequestBody RegisterDto registerDto){
         if(userRepository.existsByUsername(registerDto.getUsername())){
@@ -57,12 +61,14 @@ public class AuthController {
 
 
     @PostMapping("login")
-    public ResponseEntity<String> register(@RequestBody LoginDto loginDto){
+    public ResponseEntity<AuthResponseDto> register(@RequestBody LoginDto loginDto){
 
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        return new ResponseEntity<>("User signed in successfully!!", HttpStatus.OK);
+
+        String token = jwtGenerator.generateToken(authentication);
+        return new ResponseEntity<>(new AuthResponseDto(token), HttpStatus.OK);
     }
 
 }
