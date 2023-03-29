@@ -8,5 +8,5 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<UserEntity, Integer> {
     Optional<UserEntity> findByUsername(String username);  // returns an Optional object that either contains the user entity or is empty if the entity is not found.
                                                            // The Optional type is used here to avoid null pointer exceptions when the entity is not found.
-    Boolean existByUsername(String username);  // checks if a user with the specified username exists in the database
+    Boolean existsByUsername(String username);  // checks if a user with the specified username exists in the database
 }
