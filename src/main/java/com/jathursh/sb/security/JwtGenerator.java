@@ -3,10 +3,12 @@ package com.jathursh.sb.security;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
+import javax.crypto.SecretKey;
 import java.util.Date;
 
 @Component
@@ -17,14 +19,21 @@ public class JwtGenerator {
         Date currentDate = new Date();
         Date expirationDate = new Date(currentDate.getTime() + SecurityConstants.JWT_EXPIRATION);
 
-        String token = Jwts.builder()
+        // deprecated signWith method - works fine
+        return Jwts.builder()
                 .setSubject(username)
                 .setIssuedAt(new Date())
                 .setExpiration(expirationDate)
                 .signWith(SignatureAlgorithm.HS256, SecurityConstants.JWT_SECRET)
                 .compact();
 
-        return token;
+        // new one - works fine
+//        return Jwts.builder()
+//                .setSubject(username)
+//                .setIssuedAt(new Date())
+//                .setExpiration(expirationDate)
+//                .signWith(getSignInKey(), SignatureAlgorithm.HS256)
+//                .compact();
     }
 
     public String getUsernameFromJWT(String token) {
@@ -43,4 +52,10 @@ public class JwtGenerator {
             throw new AuthenticationCredentialsNotFoundException("JWT was expired/incorrect!!");
         }
     }
+
+    // added on 29/3
+//    private SecretKey getSignInKey() {
+//        byte[] secretBytes = SecurityConstants.JWT_SECRET.getBytes();
+//        return Keys.hmacShaKeyFor(secretBytes);
+//    }
 }
