@@ -104,10 +104,11 @@ class PokemonServiceImplTest {
                 .type("testType")
                 .build();
 
-        Mockito.when(pokemonRepository.findById(1)).thenReturn(Optional.of(pokemon));
+        Mockito.when(pokemonRepository.findById(pokemon.getId())).thenReturn(Optional.of(pokemon));
         Mockito.when(pokemonRepository.save(Mockito.any(Pokemon.class))).thenReturn(pokemon);
 
-        PokemonDto pokemonDto1 = pokemonService.updatePokemon(pokemonDto, 1);
+        // in both places you have to put same values - example = 0 or example = pokemon.getId()
+        PokemonDto pokemonDto1 = pokemonService.updatePokemon(pokemonDto, pokemon.getId());
 
         assertNotNull(pokemonDto1);
 

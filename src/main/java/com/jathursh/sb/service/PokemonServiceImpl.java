@@ -10,7 +10,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import java.awt.print.Pageable;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -93,10 +92,10 @@ public class PokemonServiceImpl implements PokemonService{
         return pokemonDto;
     }
 
-    private Pokemon mapToEntity(PokemonDto pokemonDto) {
-        Pokemon pokemon = new Pokemon();
-        pokemon.setName(pokemonDto.getName());
-        pokemon.setType(pokemonDto.getType());
-        return pokemon;
-    }
+//    private Pokemon mapToEntity(PokemonDto pokemonDto) {
+//        Pokemon pokemon = new Pokemon();
+//        pokemon.setName(pokemonDto.getName());
+//        pokemon.setType(pokemonDto.getType());
+//        return pokemon;
+//    }
 }
