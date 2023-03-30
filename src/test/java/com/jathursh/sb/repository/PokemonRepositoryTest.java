@@ -8,6 +8,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -71,6 +72,58 @@ class PokemonRepositoryTest {
 
         // Assert
         assertNotNull(pokemon1);
+    }
+
+    @Test
+    public void PokemonRepository_FindByType_ReturnPokemon(){
+
+        // Arrange
+        Pokemon pokemon = Pokemon.builder()
+                .name("pokemonTest")
+                .type("typeTest").build();
+
+        pokemonRepository.save(pokemon);
+
+        Pokemon pokemon1 = pokemonRepository.findByType(pokemon.getType()).get();
+
+        // Assert
+        assertNotNull(pokemon1);
+    }
+
+    @Test
+    public void PokemonRepository_UpdatePokemon_ReturnPokemon(){
+
+        // Arrange
+        Pokemon pokemon = Pokemon.builder()
+                .name("pokemonTest")
+                .type("typeTest").build();
+
+        pokemonRepository.save(pokemon);
+
+        Pokemon pokemonIdentified = pokemonRepository.findById(pokemon.getId()).get();
+        pokemonIdentified.setName("pokemonTest_updated");
+        pokemonIdentified.setType("typeTest_updated");
+
+        Pokemon pokemonUpdated = pokemonRepository.save(pokemonIdentified);
+
+        // Assert
+        assertNotNull(pokemonUpdated.getName());
+        assertNotNull(pokemonUpdated.getType());
+    }
+
+    @Test
+    public void PokemonRepository_DeletePokemon_ReturnPokemonIsEmpty() {
+
+        Pokemon pokemon = Pokemon.builder()
+                .name("pokemonTest")
+                .type("typeTest").build();
+        pokemonRepository.save(pokemon);
+
+        pokemonRepository.deleteById(pokemon.getId());
+
+        Optional<Pokemon> pokemonResponse = pokemonRepository.findById(pokemon.getId());
+
+        assertTrue(pokemonResponse.isEmpty());
 
     }
 }
