@@ -1,54 +1,33 @@
 package com.jathursh.sb.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jathursh.sb.dto.PokemonDto;
 import com.jathursh.sb.dto.PokemonResponse;
 import com.jathursh.sb.dto.ReviewDto;
 import com.jathursh.sb.model.Pokemon;
 import com.jathursh.sb.model.Review;
 import com.jathursh.sb.service.PokemonService;
-import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.List;
 
-import static org.mockito.Mockito.*;
-
-
 import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.mock.http.server.reactive.MockServerHttpRequest.post;
 
 @ExtendWith(MockitoExtension.class)
 class PokemonControllerTest {
-
-    @Autowired
-    private MockMvc mockMvc;
 
     @Mock
     private PokemonService pokemonService;
 
     @InjectMocks
     private PokemonController pokemonController;
-
-    @Autowired
-    private ObjectMapper objectMapper;
 
     private Pokemon pokemon;
     private Review review;

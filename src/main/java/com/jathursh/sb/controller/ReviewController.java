@@ -29,7 +29,7 @@ public class ReviewController {
     @GetMapping("pokemon/{pokemonId}/reviews/{reviewId}")
     public ResponseEntity<ReviewDto> getReviewById(@PathVariable(value = "pokemonId") int pokemonId, @PathVariable(value = "reviewId") int reviewId) {
         ReviewDto reviewDto = reviewService.getReviewById(pokemonId, reviewId);
-        return new ResponseEntity<>(reviewDto, HttpStatus.CREATED);
+        return new ResponseEntity<>(reviewDto, HttpStatus.OK);
     }
 
     @PutMapping("pokemon/{pokemonId}/reviews/{reviewId}/update")
@@ -40,6 +40,7 @@ public class ReviewController {
 
     @DeleteMapping("pokemon/{pokemonId}/reviews/{reviewId}/delete")
     public ResponseEntity<String> deleteReview(@PathVariable(value = "pokemonId") int pokemonId, @PathVariable(value = "reviewId") int reviewId){
+        reviewService.deleteReview(pokemonId, reviewId);
         return new ResponseEntity<>("review deleted!!", HttpStatus.OK);
     }
 }
