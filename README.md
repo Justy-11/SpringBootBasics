@@ -10,3 +10,4 @@
 * ❗ Exception handling
 * 📄 Pagination
 * 🔍 Query Methods
+* Unit testing with Mockito
