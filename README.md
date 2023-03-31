@@ -1,4 +1,4 @@
-# sb - pokemon
+# sb
 
 📝 Topics covered in the project:
 
