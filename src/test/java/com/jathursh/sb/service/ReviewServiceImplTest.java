@@ -1,6 +1,7 @@
 package com.jathursh.sb.service;
 
 import com.jathursh.sb.dto.ReviewDto;
+import com.jathursh.sb.exception.ReviewNotFoundException;
 import com.jathursh.sb.model.Pokemon;
 import com.jathursh.sb.model.Review;
 import com.jathursh.sb.repository.PokemonRepository;
@@ -79,7 +80,7 @@ class ReviewServiceImplTest {
     }
 
     @Test
-    void getReviewById() {
+    void getReviewById(){
 
         review.setPokemon(pokemon);  //need to set the pokemon to review
 
