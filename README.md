@@ -10,4 +10,5 @@
 * ❗ Exception handling
 * 📄 Pagination
 * 🔍 Query Methods
+* Jwt authentication
 * Unit testing with Mockito
